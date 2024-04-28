@@ -16,6 +16,7 @@ var taxLevels = []TaxLevel{
 }
 
 var personalDeduction float64 = 60000.0
+var kReceiptAmount float64 = 50000.0
 
 func calculateTax(income float64) (float64, []TaxLevel) {
 	var tax float64
@@ -46,8 +47,8 @@ func calculateTax(income float64) (float64, []TaxLevel) {
 	return tax, taxLevels
 }
 
-func calculateAllowances(person *Person) float64 {
-	var donation float64
+func calculateAllowances(person *Person) (float64, float64) {
+	var donation, kReceipt float64
 
 	for _, allowance := range person.Allowances {
 		switch allowance.AllowanceType {
@@ -57,23 +58,34 @@ func calculateAllowances(person *Person) float64 {
 			} else {
 				donation = allowance.Amount
 			}
+		case "k-receipt":
+			if allowance.Amount > kReceiptAmount {
+				kReceipt = kReceiptAmount
+			} else {
+				kReceipt = allowance.Amount
+			}
 		}
 	}
 
-	return donation
+	return donation, kReceipt
 }
 
 func calculateNetIncome(person *Person) float64 {
-	donation := calculateAllowances(person)
+	donation, kReceipt := calculateAllowances(person)
+	netIncome := person.TotalIncome - personalDeduction - donation - kReceipt
 
-	return person.TotalIncome - personalDeduction - donation
+	if netIncome < 0 {
+        return 0
+    }
+
+	return netIncome
 }
 
 func calculateWht(person *Person, tax float64) float64 {
 	if person.WHT > 0 {
 		tax -= person.WHT
 	}
-	
+
 	if tax < 0 {
 		tax = 0
 	}
