@@ -15,6 +15,7 @@ func main() {
 		return c.String(http.StatusOK, "Hello, Go Bootcamp!")
 	})
 	e.POST("/tax/calculations", tax.CalculateTaxHandler)
+	e.POST("/admin/deductions/personal", tax.UpdateDeductionHandler)
 
 	e.Logger.Fatal(e.Start(":1323"))
 }

@@ -20,3 +20,7 @@ type Person struct {
 	WHT         float64     `json:"wht" validate:"gte=0"`
 	Allowances  []Allowance `json:"allowances"`
 }
+
+type DeductionLimits struct {
+	Amount float64 `json:"amount"`
+}
