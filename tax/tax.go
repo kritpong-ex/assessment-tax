@@ -1,7 +1,13 @@
 package tax
 
+type TaxLevel struct {
+	Level string  `json:"level"`
+	Tax   float64 `json:"tax"`
+}
+
 type Tax struct {
 	Tax       float64    `json:"tax"`
+	TaxLevels []TaxLevel `json:"levels"`
 }
 
 type Allowance struct {
