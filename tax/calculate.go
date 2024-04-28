@@ -48,11 +48,20 @@ func calculateAllowances(person *Person) float64 {
 
 func calculateNetIncome(person *Person) float64 {
 	donation := calculateAllowances(person)
+	netIncome := person.TotalIncome - personalDeduction - donation
 
-	return person.TotalIncome - personalDeduction - donation
+	if netIncome < 0 {
+        return 0
+    }
+
+	return netIncome
 }
 
 func calculateWht(person *Person, tax float64) float64 {
+	if person.WHT > 0 {
+		tax -= person.WHT
+	}
+	
 	if tax < 0 {
 		tax = 0
 	}
