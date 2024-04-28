@@ -53,6 +53,10 @@ func calculateNetIncome(person *Person) float64 {
 }
 
 func calculateWht(person *Person, tax float64) float64 {
+	if person.WHT > 0 {
+		tax -= person.WHT
+	}
+	
 	if tax < 0 {
 		tax = 0
 	}
