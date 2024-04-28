@@ -26,7 +26,7 @@ func TestCalculateTax(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := calculateTax(tt.p.TotalIncome)
+			got, _ := calculateTax(tt.p.TotalIncome)
 			assert.Equal(t, tt.want, got)
 		})
 	}
