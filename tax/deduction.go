@@ -19,3 +19,16 @@ func UpdateDeductionHandler(c echo.Context) error {
 		"personalDeduction": personalDeduction,
 	})
 }
+func UpdateKReceiptHandler(c echo.Context) error {
+    var request DeductionLimits
+    
+	if err := c.Bind(&request); err != nil {
+        return err
+    }
+
+    kReceiptAmount = request.Amount
+
+    return c.JSON(http.StatusOK, map[string]float64{
+        "kReceipt": kReceiptAmount,
+    })
+}

@@ -16,6 +16,7 @@ func main() {
 	})
 	e.POST("/tax/calculations", tax.CalculateTaxHandler)
 	e.POST("/admin/deductions/personal", tax.UpdateDeductionHandler)
+	e.POST("/admin/deductions/k-receipt", tax.UpdateKReceiptHandler)
 
 	e.Logger.Fatal(e.Start(":1323"))
 }
